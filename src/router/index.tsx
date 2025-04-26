@@ -1,3 +1,5 @@
+import App from "@/App";
+import Chat from "@/views/chat/chat";
 import Home from "@/views/home/home";
 import { createBrowserRouter } from "react-router-dom";
 
@@ -8,11 +10,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: ":id",
-        element: <div>chat</div>,
+        element: <Chat />,
       },
       {
         path: "new",
-        element: <div>new chat</div>,
+        element: <App />,
       },
     ],
   },

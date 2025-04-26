@@ -27,6 +27,21 @@ export default defineConfig({
     port: 3333,
     open: true,
     strictPort: true,
+    proxy: {
+      "/spark-api": {
+        target: "https://spark-api-open.xf-yun.com",
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/spark-api/, ''),
+        ws: true,
+        configure: (proxy) => {
+          proxy.on("proxyRes", (proxyRes, _, res) => {
+            res.setHeader('Cache-Control', 'no-cache')
+            res.setHeader('Content-Type', proxyRes.headers['content-type'] || 'text/event-stream')
+            res.setHeader('Transfer-Encoding', 'chunked')
+          })
+        }
+      }
+    }
   },
   plugins: [react()],
 })

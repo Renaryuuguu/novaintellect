@@ -1,19 +1,10 @@
 import type { FC } from "react";
-import { Outlet } from "react-router-dom";
-import React from "react";
-import {
-  AppstoreOutlined,
-  BarChartOutlined,
-  CloudOutlined,
-  ShopOutlined,
-  TeamOutlined,
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-} from "@ant-design/icons";
+import { Outlet, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
-import { Layout, Menu, theme } from "antd";
-
+import { Button, Image, Layout, Menu, theme } from "antd";
+import Logo from "@/asset/ChatGPT Image 2025年4月25日 20_39_40.png";
 const { Header, Content, Footer, Sider } = Layout;
 
 const siderStyle: React.CSSProperties = {
@@ -28,31 +19,56 @@ const siderStyle: React.CSSProperties = {
 };
 
 const items: MenuProps["items"] = [
-  UserOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
-  BarChartOutlined,
-  CloudOutlined,
-  AppstoreOutlined,
-  TeamOutlined,
-  ShopOutlined,
-].map((_, index) => ({
-  key: String(index + 1),
-  label: `nav ${index + 1}`,
-}));
+  {
+    key: "ecc99324-b79c-41b1-bb0a-33cd0dda7262",
+    label: "ecc99324-b79c-41b1-bb0a-33cd0dda7262",
+  },
+];
 const Home: FC = () => {
+  const navigate = useNavigate();
+  const [collapsed, setCollapsed] = useState<boolean>(false);
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+  const handleClick: MenuProps["onClick"] = ({ key }) => {
+    console.log("click ", key);
+    navigate(key);
+  };
   return (
     <Layout hasSider>
-      <Sider style={siderStyle}>
+      <Sider style={siderStyle} collapsed={collapsed}>
         <div className="demo-logo-vertical" />
+        <Image src={Logo} preview={false} height={128} width={128} />
+        <Button
+          type="text"
+          icon={
+            collapsed ? (
+              <MenuUnfoldOutlined
+                style={{
+                  color: "red",
+                }}
+              />
+            ) : (
+              <MenuFoldOutlined
+                style={{
+                  color: "red",
+                }}
+              />
+            )
+          }
+          onClick={() => setCollapsed(!collapsed)}
+          style={{
+            fontSize: "16px",
+            width: 64,
+            height: 64,
+          }}
+        />
         <Menu
           theme="dark"
           mode="inline"
           defaultSelectedKeys={["4"]}
           items={items}
+          onClick={handleClick}
         />
       </Sider>
       <Layout>
